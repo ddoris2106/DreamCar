@@ -8,6 +8,10 @@ function BrandCollection(props){
     // console.log("working");
     
     props.cars.forEach(car => {
+        // Use Car ID as index??
+
+
+        // Removes space in car name to use as an index
         let index = car.carName.replace(/\s/g, '');
         brandCars.push(<Car car={car} indexOfShowing={props.indexOfShowing} handleIndex={props.handleIndex} index={index} />)
     });

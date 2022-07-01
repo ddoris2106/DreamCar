@@ -1,4 +1,4 @@
-import react, {useState, useEffect} from 'react';
+import react, {useState} from 'react';
 import './style.css';
 import Brand from './brand';
 import BrandCollection from './brandCollection';
@@ -30,7 +30,7 @@ function CarTable(props){
         // console.log(index)
     }
 
-        console.log(index);
+        // console.log(index);
         // Render all cars for a brand
         for(let i = 0; i < brands.length; i++){
             table.push(<Brand name={brands[i]}/>);
