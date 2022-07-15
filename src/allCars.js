@@ -70,8 +70,8 @@ export default ALLCARS;
 /*
 CREATE TABLE brand (
 	brand_id					SERIAL PRIMARY KEY,
-    brandName					VARCHAR(100) NOT NULL,
-    logo_address			VARCHAR(150) NOT NULL
+  brandName					VARCHAR(100) NOT NULL,
+  logo_address			VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE car (

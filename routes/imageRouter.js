@@ -1,4 +1,6 @@
 const express = require('express');
+const { select, create } = require('../controller/image');
+
 const imageRouter = express.Router();
 
 imageRouter.get('/', (req, res, next) => {
