@@ -1,9 +1,9 @@
-const { getNodeText } = require("@testing-library/dom");
+// const { getNodeText } = require("@testing-library/dom");
 const { general_select } = require("../db/query");
+const { errorHandler } = require("../utils");
 
 
 //CALL DATABSE FUNCTIONS
-
 const select = async(req, res) => {
     console.log("GET request recieved on DEFAULT ROUTER.");
 
@@ -14,7 +14,7 @@ const select = async(req, res) => {
             res.status().send(cars);
         }
         catch(err){
-            next(err);
+            errorHandler(err);
         }
     }
     else {
@@ -24,7 +24,7 @@ const select = async(req, res) => {
             res.status().send(cars);
         }
         catch(err){
-            next(err);
+            errorHandler(err);
         }
     }
 }

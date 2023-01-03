@@ -1,13 +1,161 @@
 // MIDDLEWARE FUNCTIONS
+const { brand_select } = require('../db/brand_query');
+const { car_select } = require('../db/car_query');
+const { image_select } = require('../db/image_query');
 
 // Check if Brand Exists in database
+const brandDoesExist = async(req, res, next) => {
+
+    const brand_id = req.params.id;
+    const { brand_name } = req.body;
+
+    try{
+        // If it is a post request, make sure the brand does not exist already
+        if(req.method === "POST" ){
+            // Query the database
+            let result = await brand_select(null, brand_name);
+
+            if(result.length !== 0){
+                err = new Error(`The brand < ${brand_name} > already exsists!`);
+                err.status = 000;
+    
+                next(err);
+            }
+        }
+        // If it is a put request, make sure the brand already exists
+        if (req.method === "PUT") {
+            // Query the database
+            let result = await brand_select(brand_id, null);
+
+            if(result.length !== 0){
+                err = new Error("This brand does not exist!");
+                err.status = 000;
+    
+                next(err);
+            }
+        }
+        else{
+            next();
+        }
+    }
+    catch(err){
+        errorHandler(err);
+    }
+}
 
 
 // Check if Car exists in database
+const carDoesExist = async(req, res, next) => {
+
+    const car_id = req.params.id;
+    const { car_name } = req.body;
+
+    try{
+        
+        // If it is a post request, make sure the car does not exist already
+        if(req.method === "POST"){
+            // Query the database
+            let result = await car_select(null, car_name);
+
+            if(result.length !== 0){
+
+                err = new Error(`The car < ${car_name} > already exsists!`);
+                err.status = 000;
+
+                next(err);
+            }
+
+        }
+        // If it is a put request, make sure the car already exists
+        if (req.method === "PUT") {
+
+            let result = await car_select(car_id, null);
+
+            if(result.length !== 0){
+
+                err = new Error(`The car < ${car_name} > does not exist!`);
+                err.status = 000;
+    
+                next(err);
+            }
+        }
+        else{
+            next();
+        }
+    }
+    catch(err){
+        errorHandler(err);
+    }
+}
 
 
-// Check if brand has cars
+// Check if Image exists in database
+const imageDoesExist = async(req, res, next) => {
 
+    const car_id = req.params.id;
+
+    try{
+        
+        // If it is a post request, make sure the image does not exist already
+        if(req.method === "POST"){
+            // Query the database
+            let result = await image_select(car_id, false);
+
+            if(result.length !== 0){
+
+                err = new Error(`The image id < ${image_id} > already exsists!`);
+                err.status = 000;
+
+                next(err);
+            }
+
+        }
+        // If it is a put request, make sure the image already exists
+        if (req.method === "PUT") {
+
+            let result = await image_select(car_id, false);
+
+            if(result.length !== 0){
+
+                err = new Error(`The image id < ${image_id} > does not exist!`);
+                err.status = 000;
+    
+                next(err);
+            }
+        }
+        else{
+            next();
+        }
+    }
+    catch(err){
+        errorHandler(err);
+    }
+}
+
+// Check if Brand has cars
+const brandHasCars = async() => {
+    
+    let { brand_name } = req.body;
+    let brand = brand_name;
+
+    try{
+        // Query the database
+        let result = await brand_select(brand);
+        if(result.length !== 0){
+            err = new Error("There are still cars belonging to this brand. All cars under this brand must be deleted before brand can be deleted.");
+            // Give the error an appropriate status code
+            err.status = 404;
+
+            throw err;
+        }
+
+        next();
+    }
+    catch(err){
+        next(err);
+    }
+
+}
 
 // Validate Data
 // Sample code from tutorial
@@ -85,7 +233,14 @@ const errorHandler = (err) => {
         console.log(`Postgres Error Code: ${err_code}. Learn more: https://www.postgresql.org/docs/12/errcodes-appendix.html.`);
     }
 
+    next(err);
+
 }
 
+
+module.exports = brandDoesExist;
+module.exports = carDoesExist;
+module.exports = imageDoesExist;
+module.exports = brandHasCars;
 module.exports = iterate;
 module.exports = errorHandler;

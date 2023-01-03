@@ -12,10 +12,10 @@ const app = express();
 const PORT = process.env.PORT || 7000;
 
 // Set Up Routers
-app.use('/', router);
-app.use('/car', carRouter);
-app.use('/brand', brandRouter);
-app.use('/images', imageRouter);
+app.use('/api', router);
+app.use('/api/car', carRouter);
+app.use('/api/brand', brandRouter);
+app.use('/api/images', imageRouter);
 
 app.use((err, req, res, next) => {
     console.log(`Error found in table ${err.table}, column ${err.column}`);
